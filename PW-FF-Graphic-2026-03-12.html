@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowderWatts — Investment Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0E1E3A;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* SNOWFLAKE SVG DECO */
+  .snow-deco { position: absolute; opacity: 0.06; pointer-events: none; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    background: linear-gradient(160deg, #0E1E3A 0%, #112348 60%, #0d2040 100%);
+    padding: 52px 48px 44px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(74,159,217,0.15);
+  }
+  .hero-bg-lines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.04; pointer-events: none;
+  }
+  .logo-img { height: 38px; margin-bottom: 32px; display: block; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+    color: #4A9FD9; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .hero-headline {
+    font-size: 38px; font-weight: 800; line-height: 1.15;
+    color: #fff; margin-bottom: 18px; max-width: 560px;
+  }
+  .hero-headline span { color: #4A9FD9; }
+  .hero-sub {
+    font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.72);
+    max-width: 480px; line-height: 1.65;
+  }
+  .coral-tag {
+    display: inline-block; background: #E8415C; color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+    margin-bottom: 20px;
+  }
+
+  /* SECTION WRAPPER */
+  .section { padding: 44px 48px; border-bottom: 1px solid rgba(74,159,217,0.1); }
+  .section:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: #4A9FD9; margin-bottom: 24px;
+  }
+
+  /* STAT CARDS */
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 4px;
+  }
+  .stat-card {
+    background: rgba(74,159,217,0.08);
+    border: 1px solid rgba(74,159,217,0.2);
+    border-radius: 10px; padding: 22px 24px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card.accent-coral {
+    background: rgba(232,65,92,0.08);
+    border-color: rgba(232,65,92,0.25);
+  }
+  .stat-card.accent-coral .stat-num { color: #E8415C; }
+  .stat-card.full-width { grid-column: 1 / -1; }
+  .stat-num {
+    font-size: 42px; font-weight: 800; color: #4A9FD9;
+    line-height: 1; margin-bottom: 6px;
+    letter-spacing: -1px;
+  }
+  .stat-num sup { font-size: 22px; vertical-align: super; }
+  .stat-label {
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9);
+    margin-bottom: 5px;
+  }
+  .stat-desc {
+    font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5;
+  }
+
+  /* WHAT WE DO */
+  .how-it-works {
+    display: flex; gap: 0; margin-top: 8px;
+  }
+  .step {
+    flex: 1; padding: 20px 20px;
+    border-right: 1px solid rgba(74,159,217,0.12);
+  }
+  .step:last-child { border-right: none; }
+  .step-icon { font-size: 26px; margin-bottom: 10px; }
+  .step-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .step-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.55; }
+  .arrow-between {
+    display: flex; align-items: center; padding: 0;
+    color: #4A9FD9; font-size: 18px; font-weight: 300;
+  }
+
+  /* TAM SECTION */
+  .tam-track {
+    display: flex; align-items: stretch; gap: 0;
+    margin-top: 12px;
+  }
+  .tam-node {
+    flex: 1; text-align: center; padding: 22px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(74,159,217,0.15);
+    border-radius: 8px;
+    position: relative;
+  }
+  .tam-node + .tam-node { margin-left: 10px; }
+  .tam-node::after {
+    content: '→'; position: absolute;
+    right: -17px; top: 50%; transform: translateY(-50%);
+    color: #4A9FD9; font-size: 16px; z-index: 2;
+  }
+  .tam-node:last-child::after { display: none; }
+  .tam-market { font-size: 11px; font-weight: 700; color: #4A9FD9; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .tam-prop { font-size: 10px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+  .tam-value { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+  .tam-value-label { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .tam-note { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 18px; font-style: italic; text-align: center; }
+
+  /* GRID ASSET */
+  .grid-box {
+    background: rgba(74,159,217,0.06);
+    border: 1px solid rgba(74,159,217,0.18);
+    border-radius: 10px; padding: 24px 28px;
+    margin-top: 4px;
+  }
+  .grid-box p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+  .grid-box strong { color: #fff; }
+  .grid-highlight {
+    display: inline-block; background: rgba(74,159,217,0.15);
+    color: #4A9FD9; font-size: 12px; font-weight: 600;
+    padding: 3px 10px; border-radius: 4px; margin-top: 12px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #112348 0%, #0d2a4a 100%);
+    padding: 44px 48px;
+    border-top: 2px solid rgba(74,159,217,0.2);
+  }
+  .cta-headline { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .cta-sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 28px; line-height: 1.6; }
+  .contact-cards { display: flex; gap: 14px; flex-wrap: wrap; }
+  .contact-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(74,159,217,0.2);
+    border-radius: 8px; padding: 16px 20px; flex: 1; min-width: 200px;
+  }
+  .contact-role { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4A9FD9; margin-bottom: 6px; }
+  .contact-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .contact-info { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .contact-card.parker-card {
+    border-color: rgba(232,65,92,0.3);
+    background: rgba(232,65,92,0.06);
+  }
+  .contact-card.parker-card .contact-role { color: #E8415C; }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    padding: 20px 48px; background: #090f1d;
+    font-size: 10px; color: rgba(255,255,255,0.3);
+    line-height: 1.6;
+  }
+
+  /* RAISE BADGE */
+  .raise-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(232,65,92,0.1); border: 1px solid rgba(232,65,92,0.3);
+    border-radius: 8px; padding: 14px 20px; margin-top: 4px;
+  }
+  .raise-badge-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #E8415C;
+    box-shadow: 0 0 0 3px rgba(232,65,92,0.25);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(232,65,92,0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(232,65,92,0.1); }
+  }
+  .raise-badge-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
+  .raise-badge-text span { color: #E8415C; }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .hero { padding: 36px 24px 32px; }
+    .hero-headline { font-size: 26px; }
+    .hero-sub { font-size: 13px; }
+    .section { padding: 32px 24px; }
+    .cta-section { padding: 32px 24px; }
+    .disclaimer { padding: 16px 24px; }
+
+    /* Stats: keep 2-col but smaller */
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-num { font-size: 32px; }
+    .stat-num sup { font-size: 16px; }
+
+    /* How it works: stack vertically */
+    .how-it-works { flex-direction: column; }
+    .step {
+      border-right: none !important;
+      border-left: none !important;
+      border-bottom: 1px solid rgba(74,159,217,0.12);
+      padding: 18px 0;
+    }
+    .step:last-child { border-bottom: none; }
+
+    /* TAM: stack vertically */
+    .tam-track { flex-direction: column; gap: 0; }
+    .tam-node { margin-left: 0 !important; margin-bottom: 10px; }
+    .tam-node::after {
+      content: '↓';
+      right: 50%; bottom: -17px; top: auto;
+      transform: translateX(50%);
+    }
+    .tam-node:last-child::after { display: none; }
+    .tam-value { font-size: 28px; }
+
+    /* Contact cards: stack */
+    .contact-cards { flex-direction: column; }
+    .contact-card { min-width: unset; }
+
+    /* Raise badge wrap */
+    .raise-badge { flex-wrap: wrap; }
+
+    /* Grid box */
+    .grid-box { padding: 18px 18px; }
+    .grid-box p { font-size: 12px; }
+
+    /* 10yr savings card */
+    .stat-card.full-width > div { flex-direction: column; gap: 8px; }
+  }
+
+  @media (max-width: 400px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .hero-headline { font-size: 22px; }
+    .stat-num { font-size: 28px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- Background grid lines SVG -->
+  <svg class="hero-bg-lines" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4A9FD9" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+  <!-- Snowflake deco top right -->
+  <svg class="snow-deco" style="top:-20px;right:-20px;width:220px;height:220px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#4A9FD9" stroke-width="1.5">
+      <line x1="50" y1="5" x2="50" y2="95"/><line x1="5" y1="50" x2="95" y2="50"/>
+      <line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/>
+      <circle cx="50" cy="5" r="3" fill="#4A9FD9"/><circle cx="50" cy="95" r="3" fill="#4A9FD9"/>
+      <circle cx="5" cy="50" r="3" fill="#4A9FD9"/><circle cx="95" cy="50" r="3" fill="#4A9FD9"/>
+      <circle cx="18" cy="18" r="3" fill="#4A9FD9"/><circle cx="82" cy="82" r="3" fill="#4A9FD9"/>
+      <circle cx="82" cy="18" r="3" fill="#4A9FD9"/><circle cx="18" cy="82" r="3" fill="#4A9FD9"/>
+      <circle cx="50" cy="50" r="5" fill="#4A9FD9"/>
+    </g>
+  </svg>
+
+  <img class="logo-img" src="https://powderwatts.com/wp-content/uploads/2025/01/logo-white.png" alt="PowderWatts">
+  <div class="coral-tag">Series A · Open Now</div>
+  <div class="hero-headline">The dumbest electrical load<br>on the planet<br><span>just got smart.</span></div>
+  <div class="hero-sub">Every building in snow country runs rooftop heat cable all winter — blindly, 24/7, whether it needs to or not. PowderWatts fixes that. The utility pays for most of the install.</div>
+</div>
+
+<!-- TRACTION STATS -->
+<div class="section">
+  <div class="section-label">Traction — One Market, Q3 2025 Launch</div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">281</div>
+      <div class="stat-label">Buildings Deployed</div>
+      <div class="stat-desc">Residential + commercial. Summit County, Utah. One market. Launched Q3 2025.</div>
+    </div>
+    <div class="stat-card accent-coral">
+      <div class="stat-num">70<sup>–80%</sup></div>
+      <div class="stat-label">Energy Savings</div>
+      <div class="stat-desc">Average reduction in heat cable energy costs after PowderWatts install.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">60<sup>%+</sup></div>
+      <div class="stat-label">Covered by Rebate</div>
+      <div class="stat-desc">Rocky Mountain Power rebates cover 60% up to 100% of install cost. Most customers are shocked at how little they pay.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">&lt;1yr</div>
+      <div class="stat-label">Typical Payback</div>
+      <div class="stat-desc">Most commercial customers recoup their remaining out-of-pocket in under 12 months.</div>
+    </div>
+    <div class="stat-card full-width" style="background:rgba(74,159,217,0.05);border-color:rgba(74,159,217,0.2);">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+        <div>
+          <div class="stat-num" style="font-size:36px;">$260k</div>
+          <div class="stat-label">Avg 10-Year Customer Savings</div>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div class="stat-desc" style="font-size:12px;line-height:1.65;color:rgba(255,255,255,0.6);">Per commercial property, based on portfolio data. Larger properties like The Lookout at Deer Valley see <strong style="color:#fff;">$1.4M+ over 10 years</strong>. The system pays for itself in months — then keeps paying.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-label">How It Works</div>
+  <div class="how-it-works">
+    <div class="step">
+      <div class="step-icon">🧊</div>
+      <div class="step-title">Dumb Wire, Running All Winter</div>
+      <div class="step-desc">Heat cable on roofs runs 24/7 — no sensors, no monitoring, nobody watching. Fire risk. Wasted energy. -100k/yr on commercial properties.</div>
+    </div>
+    <div class="step" style="border-left:1px solid rgba(74,159,217,0.12);">
+      <div class="step-icon">⚡</div>
+      <div class="step-title">PowderWatts Installs Smart Switch + Camera</div>
+      <div class="step-desc">AI watches the roof. Cable only runs when it needs to. 24/7 monitoring catches failures before they cause damage. The utility writes a check for most of the install.</div>
+    </div>
+    <div class="step" style="border-left:1px solid rgba(74,159,217,0.12);">
+      <div class="step-icon">📉</div>
+      <div class="step-title">Building Saves 70-80%. Every Winter.</div>
+      <div class="step-desc">Payback in months, not years. A load that was costing them money is now managed, monitored, and optimized. Permanently.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKET -->
+<div class="section">
+  <div class="section-label">Market — We're Just Getting Started</div>
+  <div class="tam-track">
+    <div class="tam-node">
+      <div class="tam-market">Summit County</div>
+      <div class="tam-prop">248 qualified targets · 618 analyzed</div>
+      <div class="tam-value">$9.8M</div>
+      <div class="tam-value-label">base install TAM · $2.5M/yr recurring</div>
+    </div>
+    <div class="tam-node">
+      <div class="tam-market">Mountain West</div>
+      <div class="tam-prop">Park City · Vail · Tahoe · Jackson · Big Sky</div>
+      <div class="tam-value">~$75M</div>
+      <div class="tam-value-label">5 comparable markets</div>
+    </div>
+    <div class="tam-node">
+      <div class="tam-market">US Snow Belt</div>
+      <div class="tam-prop">50+ markets · 20M+ buildings</div>
+      <div class="tam-value">$500M+</div>
+      <div class="tam-value-label">total addressable</div>
+    </div>
+  </div>
+  <div class="tam-note">The playbook is working in Summit County. We're gunning for all of it.</div>
+</div>
+
+<!-- GRID ASSET -->
+<div class="section">
+  <div class="section-label">Beyond Savings — A Grid Asset</div>
+  <div class="grid-box">
+    <p>Heat cable is one of the <strong>largest uncontrolled electrical loads on the grid</strong>. Millions of exposed wires running all winter. No one's dispatching any of it.</p>
+    <p style="margin-top:12px;">PowderWatts turns that load into something utilities can actually use — <strong>dispatchable capacity</strong> worth –200k per megawatt per year. The same kind of flexible load that data centers and hyperscalers are paying premiums to access. Federal clean energy programs and state legislation are already moving to recognize exactly this.</p>
+    <div class="grid-highlight">2 issued U.S. patents · foundational IP · moat is real</div>
+  </div>
+</div>
+
+<!-- RAISE -->
+<div class="section">
+  <div class="section-label">The Opportunity</div>
+  <div class="raise-badge">
+    <div class="raise-badge-dot"></div>
+    <div class="raise-badge-text"><span>$8M</span> Series A Round — <span>Open Now</span> · Targeting Q2 2026 Close</div>
+  </div>
+  <p style="margin-top:18px;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;">One market live. Patented. Real customers, real revenue. The broader market barely knows we exist yet. 5-year exit — utilities, energy companies, and infrastructure platforms are the obvious buyers. This window closes when the round does.</p>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-headline">Curious? Just reach out.</div>
+  <div class="cta-sub">I've been inside this for close to a year. If any part of this hits, talk to Tom or Mark directly — or just text me. I'll tell you whatever I know.</div>
+  <div class="contact-cards">
+    <div class="contact-card">
+      <div class="contact-role">CEO</div>
+      <div class="contact-name">Tom Clardy</div>
+      <div class="contact-info">thomasclardy@powderwatts.com<br>717-903-3795</div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-role">CFO</div>
+      <div class="contact-name">Mark Nelson</div>
+      <div class="contact-info">markn@powderwatts.com<br>801-694-2101</div>
+    </div>
+    <div class="contact-card parker-card">
+      <div class="contact-role">Insider · Sales</div>
+      <div class="contact-name">Parker Brand</div>
+      <div class="contact-info">parker.brand@powderwatts.com<br>Been in it close to a year. Text me.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  This is a personal communication from Parker Brand and does not constitute a formal offer to sell securities. Any investment would be handled directly by PowderWatts leadership in compliance with applicable securities laws. Past traction is not a guarantee of future results.
+</div>
+
+</body>
+</html>
